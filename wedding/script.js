@@ -1,4 +1,152 @@
 /* ════════════════════════════════════════════
+   LANGUAGE TOGGLE (EN ↔ VI)
+   ════════════════════════════════════════════ */
+(function () {
+  const translations = {
+    en: {
+      'nav.story':              'Our Story',
+      'nav.details':            'Details',
+      'nav.stay':               'Stay',
+      'nav.contact':            'Contact',
+      'hero.eyebrow':           'An Invitation to Witness',
+      'hero.date':              'November 28, 2026  ·  Cà Mau, Vietnam',
+      'hero.days':              'Days',
+      'hero.hours':             'Hours',
+      'hero.mins':              'Minutes',
+      'hero.secs':              'Seconds',
+      'hero.scroll':            'Scroll',
+      'story.ch1.label':        'Chapter One',
+      'story.ch1.title':        'Where it<br>all started',
+      'story.ch1.text':         'From the rivers and mangroves of Cà Mau — Vietnam\'s southernmost land — two souls found each other where the Mekong meets the sea.',
+      'story.ch2.label':        'Chapter Two',
+      'story.ch2.title':        'Growing<br>together',
+      'story.ch2.text':         'Through every season, every distance, every challenge — they chose each other, again and again.',
+      'story.ch3.label':        'Chapter Three',
+      'story.ch3.title':        'He asked.<br>She said yes.',
+      'story.ch3.text':         'Under the stars of Cà Mau, with trembling hands and a heart full of love, the question that changed everything was asked.',
+      'story.ch4.label':        'Chapter Four',
+      'story.ch4.title':        'November<br>28, 2026',
+      'story.ch4.text':         'Now they invite their most beloved family and friends to witness the beginning of their forever.',
+      'details.eyebrow':        'Save the Date',
+      'details.title':          'Wedding Details',
+      'details.ceremony.icon':  'Ceremony',
+      'details.ceremony.h3':    'The Ceremony',
+      'details.ceremony.date':  'November 28, 2026',
+      'details.ceremony.time':  '8:00 AM',
+      'details.ceremony.addr1': 'Khom 9, Tân Thành',
+      'details.ceremony.addr2': 'Cà Mau, Vietnam',
+      'details.reception.icon': 'Reception',
+      'details.reception.h3':   'The Reception',
+      'details.reception.date': 'November 28, 2026',
+      'details.reception.time': '5:00 PM',
+      'details.reception.addr1':'Khom 9, Tân Thành',
+      'details.reception.addr2':'Cà Mau, Vietnam',
+      'details.attire.icon':    'Attire',
+      'details.attire.h3':      'Dress Code',
+      'details.attire.p1':      'Black Tie Optional',
+      'details.attire.p2':      'Áo Dài Welcome',
+      'details.attire.p3':      'Elegant & Festive',
+      'details.map.label':      'Khom 9, Tân Thành, Cà Mau, Việt Nam',
+      'details.map.caption':    'The southernmost tip of Vietnam — where land meets sea',
+      'stay.eyebrow':           'Where to Stay',
+      'stay.title':             'Recommended Hotels',
+      'stay.hotel1.tagline':    'Grand Hotel  ·  Cà Mau',
+      'stay.hotel1.desc':       'A premier hotel in the heart of Cà Mau city, offering modern amenities and comfortable rooms just a short drive from the venue.',
+      'stay.hotel1.btn':        'View on Maps',
+      'stay.hotel2.tagline':    'Hotel  ·  Cà Mau',
+      'stay.hotel2.desc':       'A welcoming local hotel with great service and easy access to the city centre, perfect for family and out-of-town guests.',
+      'stay.hotel2.btn':        'View on Maps',
+      'contact.eyebrow':        'Get in Touch',
+      'contact.title':          'Contact Us',
+      'contact.subtitle':       'Have a question? Reach out to us directly.',
+      'contact.phone.label':    'Phone & Zalo',
+      'contact.email.label':    'Email',
+      'footer.date':            'November 28, 2026  ·  Cà Mau, Vietnam',
+      'footer.quote':           '"Two are better than one." — Ecclesiastes 4:9',
+    },
+    vi: {
+      'nav.story':              'Chuyện Tình',
+      'nav.details':            'Chi Tiết',
+      'nav.stay':               'Lưu Trú',
+      'nav.contact':            'Liên Hệ',
+      'hero.eyebrow':           'Trân Trọng Kính Mời',
+      'hero.date':              '28 tháng 11, 2026  ·  Cà Mau, Việt Nam',
+      'hero.days':              'Ngày',
+      'hero.hours':             'Giờ',
+      'hero.mins':              'Phút',
+      'hero.secs':              'Giây',
+      'hero.scroll':            'Cuộn',
+      'story.ch1.label':        'Chương Một',
+      'story.ch1.title':        'Nơi tất cả<br>bắt đầu',
+      'story.ch1.text':         'Từ những dòng sông và rừng đước Cà Mau — mảnh đất cực nam của Tổ quốc — hai tâm hồn đã tìm thấy nhau nơi sông Mê Kông hòa vào biển cả.',
+      'story.ch2.label':        'Chương Hai',
+      'story.ch2.title':        'Cùng nhau<br>lớn lên',
+      'story.ch2.text':         'Qua bao mùa, bao khoảng cách, bao thử thách — họ vẫn chọn nhau, lần này rồi lần khác.',
+      'story.ch3.label':        'Chương Ba',
+      'story.ch3.title':        'Anh hỏi.<br>Em gật đầu.',
+      'story.ch3.text':         'Dưới bầu trời sao Cà Mau, với đôi bàn tay run rẩy và trái tim đầy yêu thương, câu hỏi thay đổi tất cả đã được thốt lên.',
+      'story.ch4.label':        'Chương Bốn',
+      'story.ch4.title':        '28 tháng 11<br>năm 2026',
+      'story.ch4.text':         'Họ trân trọng kính mời những người thân yêu nhất đến chứng kiến ngày khởi đầu cho mãi mãi của họ.',
+      'details.eyebrow':        'Ghi Nhớ Ngày Này',
+      'details.title':          'Chi Tiết Đám Cưới',
+      'details.ceremony.icon':  'Lễ Cưới',
+      'details.ceremony.h3':    'Lễ Vu Quy',
+      'details.ceremony.date':  '28 tháng 11, 2026',
+      'details.ceremony.time':  '8:00 Sáng',
+      'details.ceremony.addr1': 'Khóm 9, Tân Thành',
+      'details.ceremony.addr2': 'Cà Mau, Việt Nam',
+      'details.reception.icon': 'Tiệc Cưới',
+      'details.reception.h3':   'Tiệc Mừng',
+      'details.reception.date': '28 tháng 11, 2026',
+      'details.reception.time': '5:00 Chiều',
+      'details.reception.addr1':'Khóm 9, Tân Thành',
+      'details.reception.addr2':'Cà Mau, Việt Nam',
+      'details.attire.icon':    'Trang Phục',
+      'details.attire.h3':      'Dress Code',
+      'details.attire.p1':      'Lịch Sự, Sang Trọng',
+      'details.attire.p2':      'Áo Dài Truyền Thống',
+      'details.attire.p3':      'Thanh Lịch & Rực Rỡ',
+      'details.map.label':      'Khóm 9, Tân Thành, Cà Mau, Việt Nam',
+      'details.map.caption':    'Mũi đất cực nam của Tổ quốc — nơi đất liền gặp biển',
+      'stay.eyebrow':           'Nơi Lưu Trú',
+      'stay.title':             'Khách Sạn Gợi Ý',
+      'stay.hotel1.tagline':    'Khách Sạn Lớn  ·  Cà Mau',
+      'stay.hotel1.desc':       'Khách sạn hàng đầu tại trung tâm thành phố Cà Mau, tiện nghi hiện đại và phòng ốc thoải mái, cách địa điểm tổ chức chỉ một đoạn ngắn.',
+      'stay.hotel1.btn':        'Xem trên Maps',
+      'stay.hotel2.tagline':    'Khách Sạn  ·  Cà Mau',
+      'stay.hotel2.desc':       'Khách sạn địa phương thân thiện, dịch vụ chu đáo, dễ dàng di chuyển vào trung tâm thành phố — lý tưởng cho gia đình và khách từ xa.',
+      'stay.hotel2.btn':        'Xem trên Maps',
+      'contact.eyebrow':        'Liên Hệ',
+      'contact.title':          'Liên Hệ Với Chúng Tôi',
+      'contact.subtitle':       'Có thắc mắc? Hãy liên hệ trực tiếp với chúng tôi.',
+      'contact.phone.label':    'Điện Thoại & Zalo',
+      'contact.email.label':    'Email',
+      'footer.date':            '28 tháng 11, 2026  ·  Cà Mau, Việt Nam',
+      'footer.quote':           '"Hai người hơn một." — Truyền Đạo 4:9',
+    }
+  };
+
+  let lang = 'en';
+
+  function applyLang(newLang) {
+    lang = newLang;
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+    const btn = document.getElementById('lang-toggle');
+    if (btn) btn.textContent = lang === 'en' ? 'Tiếng Việt' : 'English';
+    document.documentElement.lang = lang === 'vi' ? 'vi' : 'en';
+  }
+
+  document.getElementById('lang-toggle').addEventListener('click', () => {
+    applyLang(lang === 'en' ? 'vi' : 'en');
+  });
+})();
+
+/* ════════════════════════════════════════════
    CUSTOM CURSOR
    ════════════════════════════════════════════ */
 (function () {

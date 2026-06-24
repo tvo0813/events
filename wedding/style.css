@@ -103,6 +103,24 @@ body {
 .nav-links a:hover { color: var(--ivory); }
 .nav-links a:hover::after { transform: scaleX(1); }
 
+.lang-toggle {
+  background: transparent;
+  border: 1px solid rgba(201,169,110,0.4);
+  color: var(--ash);
+  font-family: var(--ff-sans);
+  font-size: .58rem; font-weight: 400;
+  letter-spacing: .25em; text-transform: uppercase;
+  padding: .45rem 1rem;
+  cursor: pointer;
+  transition: color .3s, border-color .3s, background .3s;
+  flex-shrink: 0;
+}
+.lang-toggle:hover {
+  color: var(--ivory);
+  border-color: var(--champagne);
+  background: rgba(201,169,110,0.08);
+}
+
 /* ─────────────── HERO ─────────────── */
 #hero {
   position: relative;
@@ -656,6 +674,7 @@ footer::before {
   .countdown { gap: 1rem; }
   .cd-dot { font-size: 1rem; }
   #nav .nav-links { display: none; }
+  .lang-toggle { display: block; }
   body { cursor: auto; }
   .cursor-dot, .cursor-ring { display: none; }
 }
