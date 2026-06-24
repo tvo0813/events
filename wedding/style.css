@@ -622,7 +622,24 @@ footer::before {
   .scrolly-section { flex-direction: column; background: var(--black); }
   .scrolly-sticky { display: none; }
   .scrolly-steps { width: 100%; }
-  .scrolly-step { height: auto; min-height: 60vh; }
+  .scrolly-step {
+    height: auto; min-height: 100svh;
+    position: relative;
+    background-size: cover; background-position: center; background-repeat: no-repeat;
+    padding: 6rem 2rem;
+    justify-content: center;
+  }
+  .scrolly-step::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 0;
+  }
+  .scrolly-step .step-card { position: relative; z-index: 1; max-width: 100%; }
+  .scrolly-step[data-step="0"] { background-image: url('images/chapter1.jpg'); }
+  .scrolly-step[data-step="1"] { background-image: url('images/chapter2.jpg'); }
+  .scrolly-step[data-step="2"] { background-image: url('images/chapter3.jpg'); }
+  .scrolly-step[data-step="3"] { background-image: url('images/chapter4.jpg'); }
   .details-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
