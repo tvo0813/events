@@ -6,10 +6,14 @@
   <title>Tin Vo & Yen Nguyen — November 28, 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
 
   <!-- NAV -->
   <nav id="nav">
@@ -18,7 +22,7 @@
       <li><a href="#story">Our Story</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#stay">Stay</a></li>
-      <li><a href="#rsvp">RSVP</a></li>
+      <li><a href="#rsvp">Contact</a></li>
     </ul>
   </nav>
 
@@ -26,7 +30,7 @@
   <section id="hero">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-content">
-      <p class="hero-eyebrow">We're getting married</p>
+      <p class="hero-eyebrow">An Invitation to Witness</p>
       <h1 class="hero-names">
         <span class="name-tin">Tin Vo</span>
         <span class="hero-amp">&amp;</span>
@@ -34,7 +38,7 @@
       </h1>
       <div class="hero-date-wrap">
         <span class="hero-line"></span>
-        <p class="hero-date">November 28, 2026 · Cà Mau, Vietnam</p>
+        <p class="hero-date">November 28, 2026 &nbsp;·&nbsp; Cà Mau, Vietnam</p>
         <span class="hero-line"></span>
       </div>
       <div class="countdown" id="countdown">
@@ -57,46 +61,70 @@
   <section id="story" class="scrolly-section">
     <div class="scrolly-sticky">
       <div class="scrolly-visual" id="scrolly-visual">
+
         <div class="scrolly-frame active" data-frame="0">
-          <canvas class="anime-canvas" id="anime-0"></canvas>
+          <div class="scene-bg" style="background-image:url('https://cdn.pixabay.com/photo/2019/11/04/16/01/landscape-of-ca-mau-4601457_1280.jpg'), url('https://statics.vinpearl.com/ca-mau-06_1691847649.jpg'); background-color:#0a1208; background-position:center; background-size:cover;"></div>
+          <div class="scene-overlay scene-overlay--0"></div>
+          <canvas class="scene-fx-canvas" data-fx="petals"></canvas>
+          <div class="scene-num-bg">I</div>
         </div>
+
         <div class="scrolly-frame" data-frame="1">
-          <canvas class="anime-canvas" id="anime-1"></canvas>
+          <div class="scene-bg" style="background-image:url('https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1920&q=90'); background-color:#0a0808;"></div>
+          <div class="scene-overlay scene-overlay--1"></div>
+          <canvas class="scene-fx-canvas" data-fx="bokeh"></canvas>
+          <div class="scene-num-bg">II</div>
         </div>
+
         <div class="scrolly-frame" data-frame="2">
-          <canvas class="anime-canvas" id="anime-2"></canvas>
+          <div class="scene-bg" style="background-image:url('https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=1920&q=90'); background-color:#060510;"></div>
+          <div class="scene-overlay scene-overlay--2"></div>
+          <canvas class="scene-fx-canvas" data-fx="embers"></canvas>
+          <div class="scene-num-bg">III</div>
         </div>
+
         <div class="scrolly-frame" data-frame="3">
-          <canvas class="anime-canvas" id="anime-3"></canvas>
+          <div class="scene-bg" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=90'); background-color:#100508;"></div>
+          <div class="scene-overlay scene-overlay--3"></div>
+          <canvas class="scene-fx-canvas" data-fx="confetti"></canvas>
+          <div class="scene-num-bg">IV</div>
         </div>
+
       </div>
+      <!-- vertical progress bar -->
+      <div class="story-progress"><div class="story-progress-fill" id="story-progress-fill"></div></div>
     </div>
+
     <div class="scrolly-steps">
       <div class="scrolly-step" data-step="0">
         <div class="step-card">
-          <span class="step-year">The Beginning</span>
-          <h2>Where it all started</h2>
-          <p>Two souls from the heart of Cà Mau, bound together by fate, laughter, and the warmth of the Mekong Delta breeze.</p>
+          <span class="step-label">Chapter One</span>
+          <h2>Where it<br>all started</h2>
+          <div class="step-divider"></div>
+          <p>From the rivers and mangroves of Cà Mau — Vietnam's southernmost land — two souls found each other where the Mekong meets the sea.</p>
         </div>
       </div>
       <div class="scrolly-step" data-step="1">
         <div class="step-card">
-          <span class="step-year">The Journey</span>
-          <h2>Growing together</h2>
+          <span class="step-label">Chapter Two</span>
+          <h2>Growing<br>together</h2>
+          <div class="step-divider"></div>
           <p>Through every season, every distance, every challenge — they chose each other, again and again.</p>
         </div>
       </div>
       <div class="scrolly-step" data-step="2">
         <div class="step-card">
-          <span class="step-year">The Proposal</span>
-          <h2>He asked. She said yes.</h2>
+          <span class="step-label">Chapter Three</span>
+          <h2>He asked.<br>She said yes.</h2>
+          <div class="step-divider"></div>
           <p>Under the stars of Cà Mau, with trembling hands and a heart full of love, the question that changed everything was asked.</p>
         </div>
       </div>
       <div class="scrolly-step" data-step="3">
         <div class="step-card">
-          <span class="step-year">Forever</span>
-          <h2>November 28, 2026</h2>
+          <span class="step-label">Chapter Four</span>
+          <h2>November<br>28, 2026</h2>
+          <div class="step-divider"></div>
           <p>Now they invite their most beloved family and friends to witness the beginning of their forever.</p>
         </div>
       </div>
@@ -111,26 +139,26 @@
     </div>
     <div class="details-grid">
       <div class="detail-card" data-reveal>
-        <div class="detail-icon">◎</div>
-        <h3>Ceremony</h3>
+        <div class="detail-icon">Ceremony</div>
+        <h3>The Ceremony</h3>
         <p>November 28, 2026</p>
         <p>8:00 AM</p>
         <p>Khom 9, Tân Thành</p>
         <p>Cà Mau, Vietnam</p>
       </div>
       <div class="detail-card" data-reveal>
-        <div class="detail-icon">✦</div>
-        <h3>Reception</h3>
+        <div class="detail-icon">Reception</div>
+        <h3>The Reception</h3>
         <p>November 28, 2026</p>
         <p>5:00 PM</p>
         <p>Khom 9, Tân Thành</p>
         <p>Cà Mau, Vietnam</p>
       </div>
       <div class="detail-card" data-reveal>
-        <div class="detail-icon">◈</div>
+        <div class="detail-icon">Attire</div>
         <h3>Dress Code</h3>
         <p>Black Tie Optional</p>
-        <p>Ao Dai welcome</p>
+        <p>Áo Dài Welcome</p>
         <p>Elegant &amp; Festive</p>
       </div>
     </div>
@@ -138,9 +166,9 @@
       <div class="map-label">Khom 9, Tân Thành, Cà Mau, Việt Nam</div>
       <div class="map-pin-wrapper">
         <div class="map-ripple"></div>
-        <div class="map-pin">📍</div>
+        <div class="map-pin">&#9670;</div>
       </div>
-      <p class="map-caption">The southernmost tip of Vietnam — where land meets sea.</p>
+      <p class="map-caption">The southernmost tip of Vietnam — where land meets sea</p>
     </div>
   </section>
 
@@ -152,67 +180,41 @@
     </div>
     <div class="stay-grid">
       <div class="stay-card" data-reveal>
-        <div class="stay-icon">🏨</div>
+        <div class="stay-icon">Hotel</div>
         <h3>Mường Thanh</h3>
-        <p class="stay-tagline">Grand Hotel · Cà Mau</p>
+        <p class="stay-tagline">Grand Hotel &nbsp;·&nbsp; Cà Mau</p>
         <p class="stay-desc">A premier hotel in the heart of Cà Mau city, offering modern amenities and comfortable rooms just a short drive from the venue.</p>
-        <a class="stay-btn" href="https://share.google/hdz6XP54r6I6NpYth" target="_blank" rel="noopener">View on Maps →</a>
+        <a class="stay-btn" href="https://share.google/hdz6XP54r6I6NpYth" target="_blank" rel="noopener">View on Maps</a>
       </div>
       <div class="stay-card" data-reveal>
-        <div class="stay-icon">🏩</div>
+        <div class="stay-icon">Hotel</div>
         <h3>Phú Cường</h3>
-        <p class="stay-tagline">Hotel · Cà Mau</p>
+        <p class="stay-tagline">Hotel &nbsp;·&nbsp; Cà Mau</p>
         <p class="stay-desc">A welcoming local hotel with great service and easy access to the city centre, perfect for family and out-of-town guests.</p>
-        <a class="stay-btn" href="https://share.google/fudF6NAGr2ISjwDPk" target="_blank" rel="noopener">View on Maps →</a>
+        <a class="stay-btn" href="https://share.google/fudF6NAGr2ISjwDPk" target="_blank" rel="noopener">View on Maps</a>
       </div>
     </div>
   </section>
 
-  <!-- RSVP -->
-  <section id="rsvp" class="rsvp-section">
+  <!-- CONTACT -->
+  <section id="rsvp" class="contact-section">
     <div class="rsvp-bg-canvas">
       <canvas id="rsvp-canvas"></canvas>
     </div>
-    <div class="rsvp-content">
-      <p class="section-eyebrow">Join Us</p>
-      <h2 class="section-title">RSVP</h2>
-      <p class="rsvp-subtitle">Kindly reply by September 28, 2026</p>
-      <form class="rsvp-form" id="rsvp-form">
-        <div class="form-row">
-          <div class="form-group">
-            <input type="text" id="name" placeholder=" " required />
-            <label for="name">Full Name</label>
-          </div>
-          <div class="form-group">
-            <input type="email" id="email" placeholder=" " required />
-            <label for="email">Email Address</label>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <select id="attending" required>
-              <option value="" disabled selected></option>
-              <option value="yes">Joyfully Accepts</option>
-              <option value="no">Regretfully Declines</option>
-            </select>
-            <label for="attending">Attendance</label>
-          </div>
-          <div class="form-group">
-            <input type="number" id="guests" placeholder=" " min="1" max="5" />
-            <label for="guests">Number of Guests</label>
-          </div>
-        </div>
-        <div class="form-group full-width">
-          <textarea id="message" placeholder=" " rows="3"></textarea>
-          <label for="message">Message to the Couple (optional)</label>
-        </div>
-        <button type="submit" class="rsvp-btn">
-          <span class="btn-text">Send with Love</span>
-          <span class="btn-icon">→</span>
-        </button>
-      </form>
-      <div class="rsvp-success" id="rsvp-success">
-        <p>✦ Thank you! We can't wait to celebrate with you. ✦</p>
+    <div class="contact-content">
+      <p class="section-eyebrow">Get in Touch</p>
+      <h2 class="section-title">Contact Us</h2>
+      <p class="contact-subtitle">Have a question? Reach out to us directly.</p>
+      <div class="contact-items">
+        <a class="contact-item" href="tel:+19493544594">
+          <span class="contact-item-label">Phone &amp; Zalo</span>
+          <span class="contact-item-value">+1 (949) 354-4594</span>
+        </a>
+        <div class="contact-divider"></div>
+        <a class="contact-item" href="mailto:tintvo08@gmail.com">
+          <span class="contact-item-label">Email</span>
+          <span class="contact-item-value">tintvo08@gmail.com</span>
+        </a>
       </div>
     </div>
   </section>
@@ -220,7 +222,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-monogram">T &amp; Y</div>
-    <p class="footer-date">November 28, 2026 · Cà Mau, Vietnam</p>
+    <p class="footer-date">November 28, 2026 &nbsp;·&nbsp; Cà Mau, Vietnam</p>
     <p class="footer-quote">"Two are better than one." — Ecclesiastes 4:9</p>
   </footer>
 
