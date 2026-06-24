@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tin Vo & Yen Nguyen — November 28, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">T &amp; Y</div>
+    <ul class="nav-links">
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#stay">Stay</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-content">
+      <p class="hero-eyebrow">We're getting married</p>
+      <h1 class="hero-names">
+        <span class="name-tin">Tin Vo</span>
+        <span class="hero-amp">&amp;</span>
+        <span class="name-yen">Yen Nguyen</span>
+      </h1>
+      <div class="hero-date-wrap">
+        <span class="hero-line"></span>
+        <p class="hero-date">November 28, 2026 · Cà Mau, Vietnam</p>
+        <span class="hero-line"></span>
+      </div>
+      <div class="countdown" id="countdown">
+        <div class="cd-block"><span id="cd-days">000</span><label>Days</label></div>
+        <div class="cd-dot">·</div>
+        <div class="cd-block"><span id="cd-hours">00</span><label>Hours</label></div>
+        <div class="cd-dot">·</div>
+        <div class="cd-block"><span id="cd-mins">00</span><label>Minutes</label></div>
+        <div class="cd-dot">·</div>
+        <div class="cd-block"><span id="cd-secs">00</span><label>Seconds</label></div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- SCROLLYTELLING STORY -->
+  <section id="story" class="scrolly-section">
+    <div class="scrolly-sticky">
+      <div class="scrolly-visual" id="scrolly-visual">
+        <div class="scrolly-frame active" data-frame="0">
+          <canvas class="anime-canvas" id="anime-0"></canvas>
+        </div>
+        <div class="scrolly-frame" data-frame="1">
+          <canvas class="anime-canvas" id="anime-1"></canvas>
+        </div>
+        <div class="scrolly-frame" data-frame="2">
+          <canvas class="anime-canvas" id="anime-2"></canvas>
+        </div>
+        <div class="scrolly-frame" data-frame="3">
+          <canvas class="anime-canvas" id="anime-3"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="scrolly-steps">
+      <div class="scrolly-step" data-step="0">
+        <div class="step-card">
+          <span class="step-year">The Beginning</span>
+          <h2>Where it all started</h2>
+          <p>Two souls from the heart of Cà Mau, bound together by fate, laughter, and the warmth of the Mekong Delta breeze.</p>
+        </div>
+      </div>
+      <div class="scrolly-step" data-step="1">
+        <div class="step-card">
+          <span class="step-year">The Journey</span>
+          <h2>Growing together</h2>
+          <p>Through every season, every distance, every challenge — they chose each other, again and again.</p>
+        </div>
+      </div>
+      <div class="scrolly-step" data-step="2">
+        <div class="step-card">
+          <span class="step-year">The Proposal</span>
+          <h2>He asked. She said yes.</h2>
+          <p>Under the stars of Cà Mau, with trembling hands and a heart full of love, the question that changed everything was asked.</p>
+        </div>
+      </div>
+      <div class="scrolly-step" data-step="3">
+        <div class="step-card">
+          <span class="step-year">Forever</span>
+          <h2>November 28, 2026</h2>
+          <p>Now they invite their most beloved family and friends to witness the beginning of their forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section id="details" class="details-section">
+    <div class="details-header">
+      <p class="section-eyebrow">Save the Date</p>
+      <h2 class="section-title">Wedding Details</h2>
+    </div>
+    <div class="details-grid">
+      <div class="detail-card" data-reveal>
+        <div class="detail-icon">◎</div>
+        <h3>Ceremony</h3>
+        <p>November 28, 2026</p>
+        <p>8:00 AM</p>
+        <p>Khom 9, Tân Thành</p>
+        <p>Cà Mau, Vietnam</p>
+      </div>
+      <div class="detail-card" data-reveal>
+        <div class="detail-icon">✦</div>
+        <h3>Reception</h3>
+        <p>November 28, 2026</p>
+        <p>5:00 PM</p>
+        <p>Khom 9, Tân Thành</p>
+        <p>Cà Mau, Vietnam</p>
+      </div>
+      <div class="detail-card" data-reveal>
+        <div class="detail-icon">◈</div>
+        <h3>Dress Code</h3>
+        <p>Black Tie Optional</p>
+        <p>Ao Dai welcome</p>
+        <p>Elegant &amp; Festive</p>
+      </div>
+    </div>
+    <div class="map-container" data-reveal>
+      <div class="map-label">Khom 9, Tân Thành, Cà Mau, Việt Nam</div>
+      <div class="map-pin-wrapper">
+        <div class="map-ripple"></div>
+        <div class="map-pin">📍</div>
+      </div>
+      <p class="map-caption">The southernmost tip of Vietnam — where land meets sea.</p>
+    </div>
+  </section>
+
+  <!-- ACCOMMODATIONS -->
+  <section id="stay" class="stay-section">
+    <div class="stay-header">
+      <p class="section-eyebrow">Where to Stay</p>
+      <h2 class="section-title">Recommended Hotels</h2>
+    </div>
+    <div class="stay-grid">
+      <div class="stay-card" data-reveal>
+        <div class="stay-icon">🏨</div>
+        <h3>Mường Thanh</h3>
+        <p class="stay-tagline">Grand Hotel · Cà Mau</p>
+        <p class="stay-desc">A premier hotel in the heart of Cà Mau city, offering modern amenities and comfortable rooms just a short drive from the venue.</p>
+        <a class="stay-btn" href="https://share.google/hdz6XP54r6I6NpYth" target="_blank" rel="noopener">View on Maps →</a>
+      </div>
+      <div class="stay-card" data-reveal>
+        <div class="stay-icon">🏩</div>
+        <h3>Phú Cường</h3>
+        <p class="stay-tagline">Hotel · Cà Mau</p>
+        <p class="stay-desc">A welcoming local hotel with great service and easy access to the city centre, perfect for family and out-of-town guests.</p>
+        <a class="stay-btn" href="https://share.google/fudF6NAGr2ISjwDPk" target="_blank" rel="noopener">View on Maps →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp" class="rsvp-section">
+    <div class="rsvp-bg-canvas">
+      <canvas id="rsvp-canvas"></canvas>
+    </div>
+    <div class="rsvp-content">
+      <p class="section-eyebrow">Join Us</p>
+      <h2 class="section-title">RSVP</h2>
+      <p class="rsvp-subtitle">Kindly reply by September 28, 2026</p>
+      <form class="rsvp-form" id="rsvp-form">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="name" placeholder=" " required />
+            <label for="name">Full Name</label>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" placeholder=" " required />
+            <label for="email">Email Address</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <select id="attending" required>
+              <option value="" disabled selected></option>
+              <option value="yes">Joyfully Accepts</option>
+              <option value="no">Regretfully Declines</option>
+            </select>
+            <label for="attending">Attendance</label>
+          </div>
+          <div class="form-group">
+            <input type="number" id="guests" placeholder=" " min="1" max="5" />
+            <label for="guests">Number of Guests</label>
+          </div>
+        </div>
+        <div class="form-group full-width">
+          <textarea id="message" placeholder=" " rows="3"></textarea>
+          <label for="message">Message to the Couple (optional)</label>
+        </div>
+        <button type="submit" class="rsvp-btn">
+          <span class="btn-text">Send with Love</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </form>
+      <div class="rsvp-success" id="rsvp-success">
+        <p>✦ Thank you! We can't wait to celebrate with you. ✦</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-monogram">T &amp; Y</div>
+    <p class="footer-date">November 28, 2026 · Cà Mau, Vietnam</p>
+    <p class="footer-quote">"Two are better than one." — Ecclesiastes 4:9</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
