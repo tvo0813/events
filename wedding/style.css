@@ -632,10 +632,18 @@ footer::before {
   .scrolly-step::before {
     content: '';
     position: absolute; inset: 0;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.65);
     z-index: 0;
   }
-  .scrolly-step .step-card { position: relative; z-index: 1; max-width: 100%; }
+  .scrolly-step .step-card {
+    position: relative; z-index: 1; max-width: 100%;
+  }
+  .scrolly-step .step-card p {
+    color: rgba(255,255,255,0.88);
+  }
+  .scrolly-step .step-card h2 {
+    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  }
   .scrolly-step[data-step="0"] { background-image: url('images/chapter1.jpg') !important; }
   .scrolly-step[data-step="1"] { background-image: url('images/chapter2.jpg') !important; }
   .scrolly-step[data-step="2"] { background-image: url('images/chapter3.jpg') !important; }
