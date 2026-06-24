@@ -625,7 +625,7 @@ footer::before {
   .scrolly-step {
     height: auto; min-height: 100svh;
     position: relative;
-    background-size: cover; background-position: center; background-repeat: no-repeat;
+    background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;
     padding: 6rem 2rem;
     justify-content: center;
   }
@@ -636,10 +636,10 @@ footer::before {
     z-index: 0;
   }
   .scrolly-step .step-card { position: relative; z-index: 1; max-width: 100%; }
-  .scrolly-step[data-step="0"] { background-image: url('images/chapter1.jpg'); }
-  .scrolly-step[data-step="1"] { background-image: url('images/chapter2.jpg'); }
-  .scrolly-step[data-step="2"] { background-image: url('images/chapter3.jpg'); }
-  .scrolly-step[data-step="3"] { background-image: url('images/chapter4.jpg'); }
+  .scrolly-step[data-step="0"] { background-image: url('images/chapter1.jpg') !important; }
+  .scrolly-step[data-step="1"] { background-image: url('images/chapter2.jpg') !important; }
+  .scrolly-step[data-step="2"] { background-image: url('images/chapter3.jpg') !important; }
+  .scrolly-step[data-step="3"] { background-image: url('images/chapter4.jpg') !important; }
   .details-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
