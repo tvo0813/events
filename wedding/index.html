@@ -26,6 +26,29 @@
     </div>
   </div>
 
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-fill" id="scroll-progress-fill"></div>
+  </div>
+
+  <!-- TICKER (mobile only) -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track" id="ticker-track">
+      <span class="ticker-item">Tin &amp; Yen</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">November 28 · 2026</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Cà Mau · Việt Nam</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Tin &amp; Yen</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">November 28 · 2026</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Cà Mau · Việt Nam</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Tin &amp; Yen</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">November 28 · 2026</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Cà Mau · Việt Nam</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Tin &amp; Yen</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">November 28 · 2026</span><span class="ticker-sep">·</span>
+      <span class="ticker-item">Cà Mau · Việt Nam</span><span class="ticker-sep">·</span>
+    </div>
+  </div>
+
   <!-- CUSTOM CURSOR -->
   <div class="cursor-dot" id="cursor-dot"></div>
   <div class="cursor-ring" id="cursor-ring"></div>
@@ -45,6 +68,21 @@
   <!-- HERO -->
   <section id="hero">
     <canvas id="hero-canvas"></canvas>
+
+    <!-- Corner ornament lines -->
+    <div class="hero-ornament" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <!-- top-left -->
+        <polyline class="ornament-tl" points="2,22 2,2 22,2"/>
+        <!-- top-right -->
+        <polyline class="ornament-tr" points="78,2 98,2 98,22"/>
+        <!-- bottom-left -->
+        <polyline class="ornament-bl" points="2,78 2,98 22,98"/>
+        <!-- bottom-right -->
+        <polyline class="ornament-br" points="78,98 98,98 98,78"/>
+      </svg>
+    </div>
+
     <div class="hero-content">
       <p class="hero-eyebrow" data-i18n="hero.eyebrow">November 28, 2026 &nbsp;·&nbsp; Cà Mau</p>
       <h1 class="hero-names">
@@ -58,13 +96,33 @@
         <span class="hero-line"></span>
       </div>
       <div class="countdown" id="countdown">
-        <div class="cd-block"><span id="cd-days">000</span><label data-i18n="hero.days">Days</label></div>
+        <div class="cd-block" data-unit="days" data-max="520">
+          <svg class="cd-ring-svg" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="cd-ring-circle" id="ring-days" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="226"/>
+          </svg>
+          <span id="cd-days">000</span><label data-i18n="hero.days">Days</label>
+        </div>
         <div class="cd-dot">·</div>
-        <div class="cd-block"><span id="cd-hours">00</span><label data-i18n="hero.hours">Hours</label></div>
+        <div class="cd-block" data-unit="hours" data-max="24">
+          <svg class="cd-ring-svg" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="cd-ring-circle" id="ring-hours" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="226"/>
+          </svg>
+          <span id="cd-hours">00</span><label data-i18n="hero.hours">Hours</label>
+        </div>
         <div class="cd-dot">·</div>
-        <div class="cd-block"><span id="cd-mins">00</span><label data-i18n="hero.mins">Minutes</label></div>
+        <div class="cd-block" data-unit="mins" data-max="60">
+          <svg class="cd-ring-svg" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="cd-ring-circle" id="ring-mins" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="226"/>
+          </svg>
+          <span id="cd-mins">00</span><label data-i18n="hero.mins">Minutes</label>
+        </div>
         <div class="cd-dot">·</div>
-        <div class="cd-block"><span id="cd-secs">00</span><label data-i18n="hero.secs">Seconds</label></div>
+        <div class="cd-block" data-unit="secs" data-max="60">
+          <svg class="cd-ring-svg" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true">
+            <circle class="cd-ring-circle" id="ring-secs" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="226"/>
+          </svg>
+          <span id="cd-secs">00</span><label data-i18n="hero.secs">Seconds</label>
+        </div>
       </div>
     </div>
     <div class="scroll-hint">
@@ -113,6 +171,7 @@
 
     <div class="scrolly-steps">
       <div class="scrolly-step" data-step="0">
+        <div class="scrolly-step-glow"></div>
         <div class="step-card">
           <span class="step-label" data-i18n="story.ch1.label">Chapter One</span>
           <h2 data-i18n="story.ch1.title">Where it<br>all started</h2>
@@ -121,6 +180,7 @@
         </div>
       </div>
       <div class="scrolly-step" data-step="1">
+        <div class="scrolly-step-glow"></div>
         <div class="step-card">
           <span class="step-label" data-i18n="story.ch2.label">Chapter Two</span>
           <h2 data-i18n="story.ch2.title">Growing<br>together</h2>
@@ -129,6 +189,7 @@
         </div>
       </div>
       <div class="scrolly-step" data-step="2">
+        <div class="scrolly-step-glow"></div>
         <div class="step-card">
           <span class="step-label" data-i18n="story.ch3.label">Chapter Three</span>
           <h2 data-i18n="story.ch3.title">He asked.<br>She said yes.</h2>
@@ -137,6 +198,7 @@
         </div>
       </div>
       <div class="scrolly-step" data-step="3">
+        <div class="scrolly-step-glow"></div>
         <div class="step-card">
           <span class="step-label" data-i18n="story.ch4.label">Chapter Four</span>
           <h2 data-i18n="story.ch4.title">November<br>28, 2026</h2>

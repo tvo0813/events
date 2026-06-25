@@ -414,6 +414,15 @@
     el.classList.add('flip');
   }
 
+  const CIRC = 226; // 2π × 36
+
+  function setRing(id, value, max) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const pct = Math.min(1, value / max);
+    el.style.strokeDashoffset = CIRC * (1 - pct);
+  }
+
   function update() {
     const diff = target - new Date();
     if (diff <= 0) {
@@ -421,14 +430,18 @@
         '<p style="font-family:var(--ff-display);font-size:1.6rem;color:var(--champagne);letter-spacing:.12em;font-style:italic">Today is the day</p>';
       return;
     }
-    const d = String(Math.floor(diff / 86400000)).padStart(3, '0');
-    const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
-    const m = String(Math.floor((diff % 3600000)  / 60000)).padStart(2, '0');
-    const s = String(Math.floor((diff % 60000)    / 1000)).padStart(2, '0');
-    flipTo(document.getElementById('cd-days'),  d);
-    flipTo(document.getElementById('cd-hours'), h);
-    flipTo(document.getElementById('cd-mins'),  m);
-    flipTo(document.getElementById('cd-secs'),  s);
+    const dV = Math.floor(diff / 86400000);
+    const hV = Math.floor((diff % 86400000) / 3600000);
+    const mV = Math.floor((diff % 3600000)  / 60000);
+    const sV = Math.floor((diff % 60000)    / 1000);
+    flipTo(document.getElementById('cd-days'),  String(dV).padStart(3, '0'));
+    flipTo(document.getElementById('cd-hours'), String(hV).padStart(2, '0'));
+    flipTo(document.getElementById('cd-mins'),  String(mV).padStart(2, '0'));
+    flipTo(document.getElementById('cd-secs'),  String(sV).padStart(2, '0'));
+    setRing('ring-days',  dV, 520);
+    setRing('ring-hours', hV, 24);
+    setRing('ring-mins',  mV, 60);
+    setRing('ring-secs',  sV, 60);
   }
   update();
   setInterval(update, 1000);
@@ -797,6 +810,22 @@
   window.addEventListener('resize', resize, { passive: true });
 })();
 
+
+/* ════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ════════════════════════════════════════════ */
+(function () {
+  const fill = document.getElementById('scroll-progress-fill');
+  if (!fill) return;
+  function update() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max <= 0) return;
+    fill.style.width = (window.scrollY / max * 100) + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+})();
 
 /* ════════════════════════════════════════════
    SMOOTH ANCHORS

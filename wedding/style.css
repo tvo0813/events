@@ -812,11 +812,153 @@ footer::after {
   .do-reveal [data-reveal] { opacity: 1; transform: none; transition: none; }
   .intro-overlay { display: none; }
   .scroll-arrow { animation: none; }
+  .ornament-tl, .ornament-tr, .ornament-bl, .ornament-br {
+    animation: none; stroke-dashoffset: 0;
+  }
+  .ticker-track { animation: none; }
+  .cd-ring-circle { transition: none; }
+  .title-clip-inner { transform: none; transition: none; }
+  .scrolly-step-glow { transition: none; }
+}
+
+/* ─────────────── SCROLL PROGRESS ─────────────── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 9999; pointer-events: none;
+  background: transparent;
+}
+.scroll-progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--gold-dim), var(--champagne), var(--gold-lt));
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px oklch(72% 0.12 70 / 0.6);
+}
+
+/* ─────────────── TICKER ─────────────── */
+.ticker-wrap {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 28px; z-index: 90;
+  overflow: hidden;
+  background: oklch(7% 0.006 160 / 0.9);
+  border-bottom: 1px solid oklch(72% 0.08 72 / 0.12);
+  display: none;
+}
+.ticker-track {
+  display: flex; align-items: center;
+  height: 100%;
+  white-space: nowrap;
+  will-change: transform;
+  animation: tickerMove 28s linear infinite;
+}
+.ticker-item {
+  font-family: var(--ff-sans);
+  font-size: 0.42rem; letter-spacing: 0.45em; text-transform: uppercase;
+  color: var(--champagne); opacity: 0.8;
+  padding: 0 2.4rem;
+  flex-shrink: 0;
+}
+.ticker-sep {
+  font-size: 0.5rem; color: var(--gold-dim); opacity: 0.6;
+  flex-shrink: 0;
+}
+@keyframes tickerMove {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─────────────── HERO ORNAMENT ─────────────── */
+.hero-ornament {
+  position: absolute; inset: 0; z-index: 1;
+  pointer-events: none; overflow: hidden;
+}
+.hero-ornament svg {
+  position: absolute;
+  width: 100%; height: 100%;
+}
+.ornament-tl, .ornament-tr, .ornament-bl, .ornament-br {
+  stroke: oklch(72% 0.1 72 / 0.35);
+  stroke-width: 0.8;
+  fill: none;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+.ornament-tl { animation: drawLine 1.8s 3.2s var(--ease-out-expo) forwards; }
+.ornament-tr { animation: drawLine 1.8s 3.4s var(--ease-out-expo) forwards; }
+.ornament-bl { animation: drawLine 1.8s 3.6s var(--ease-out-expo) forwards; }
+.ornament-br { animation: drawLine 1.8s 3.8s var(--ease-out-expo) forwards; }
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ─────────────── COUNTDOWN RINGS ─────────────── */
+.cd-block {
+  position: relative;
+}
+.cd-ring-svg {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.18;
+}
+.cd-ring-circle {
+  fill: none;
+  stroke: var(--champagne);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+
+/* ─────────────── MOBILE STORY CARDS: ambient glow ─────────────── */
+.scrolly-step-glow {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 60%, oklch(72% 0.08 72 / 0.12) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.scrolly-step.is-active .scrolly-step-glow { opacity: 1; }
+
+/* ─────────────── DETAILS: gold line draw ─────────────── */
+.details-grid::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: oklch(72% 0.08 72 / 0);
+  transition: none;
+}
+.details-grid.lines-drawn::before {
+  background: linear-gradient(90deg, transparent, oklch(72% 0.08 72 / 0.3), transparent);
+  transition: background 1.2s ease;
+}
+
+/* ─────────────── SECTION TITLE CLIP REVEAL ─────────────── */
+.title-clip {
+  overflow: hidden;
+  display: block;
+}
+.title-clip-inner {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 1s var(--ease-out-expo);
+}
+.revealed .title-clip-inner,
+.do-reveal.lines-drawn .title-clip-inner {
+  transform: translateY(0);
 }
 
 /* ─────────────── RESPONSIVE ─────────────── */
 @media (max-width: 900px) {
-  #nav { padding: 1.4rem 2rem; }
+  .ticker-wrap { display: flex; }
+  /* Nav always has a solid background on mobile — no transparent hero bleed */
+  #nav {
+    padding: 1.4rem 2rem;
+    margin-top: 28px;
+    background: oklch(7% 0.006 160 / 0.95) !important;
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    border-bottom: 1px solid oklch(72% 0.08 72 / 0.12);
+  }
   #nav.scrolled { padding: 1rem 2rem; }
   .nav-links { gap: 2rem; }
 
@@ -862,10 +1004,12 @@ footer::after {
 
 @media (max-width: 600px) {
   .hero-names { font-size: clamp(3.5rem, 15vw, 6rem); }
-  .countdown { gap: 0.9rem; flex-wrap: nowrap; }
-  .cd-block span { font-size: clamp(2.2rem, 8vw, 3.2rem); }
-  .cd-block label { font-size: 0.5rem; }
+  .countdown { gap: 0.5rem; flex-wrap: nowrap; }
+  .cd-block span { font-size: clamp(1.9rem, 7vw, 2.8rem); }
+  .cd-block label { font-size: 0.44rem; }
   .cd-dot { font-size: 0.8rem; padding-bottom: 1.2rem; }
+  /* Scale rings down proportionally */
+  .cd-ring-svg { width: 58px; height: 58px; }
   #nav .nav-links { display: none; }
   .lang-toggle { display: block; }
   body { cursor: auto; }
@@ -873,8 +1017,9 @@ footer::after {
   .intro-name { font-size: clamp(3.5rem, 16vw, 6.5rem); }
   .detail-card { padding: 3rem 1.5rem; }
   .stay-card { padding: 3rem 2rem; }
-  /* Bigger touch targets */
   .stay-btn { padding: 1rem 2rem; font-size: 0.6rem; }
   .contact-item { padding: 3rem 1.5rem; }
   .contact-item-value { font-size: clamp(1.2rem, 5vw, 2rem); }
+  /* Ticker font size bump for very small screens */
+  .ticker-item { font-size: 0.45rem; letter-spacing: 0.35em; }
 }
