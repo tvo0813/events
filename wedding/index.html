@@ -6,10 +6,25 @@
   <title>Tin Vo & Yen Nguyen — November 28, 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- CINEMATIC INTRO -->
+  <div class="intro-overlay" id="intro-overlay">
+    <div class="intro-inner">
+      <div class="intro-line intro-line--top"></div>
+      <p class="intro-place">Cà Mau · Vietnam · 2026</p>
+      <div class="intro-names-wrap">
+        <span class="intro-name" id="intro-tin">Tin</span>
+        <span class="intro-amp">&amp;</span>
+        <span class="intro-name" id="intro-yen">Yen</span>
+      </div>
+      <div class="intro-line intro-line--bot"></div>
+      <p class="intro-date">November 28</p>
+    </div>
+  </div>
 
   <!-- CUSTOM CURSOR -->
   <div class="cursor-dot" id="cursor-dot"></div>
@@ -31,7 +46,7 @@
   <section id="hero">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-content">
-      <p class="hero-eyebrow" data-i18n="hero.eyebrow">An Invitation to Witness</p>
+      <p class="hero-eyebrow" data-i18n="hero.eyebrow">November 28, 2026 &nbsp;·&nbsp; Cà Mau</p>
       <h1 class="hero-names">
         <span class="name-tin">Tin Vo</span>
         <span class="hero-amp">&amp;</span>
@@ -147,6 +162,7 @@
         <p data-i18n="details.ceremony.addr1">Khom 9, Tân Thành</p>
         <p data-i18n="details.ceremony.addr2">Cà Mau, Vietnam</p>
       </div>
+      <div class="details-divider" aria-hidden="true"></div>
       <div class="detail-card" data-reveal>
         <div class="detail-icon" data-i18n="details.reception.icon">Reception</div>
         <h3 data-i18n="details.reception.h3">The Reception</h3>
@@ -155,6 +171,7 @@
         <p data-i18n="details.reception.addr1">Khom 9, Tân Thành</p>
         <p data-i18n="details.reception.addr2">Cà Mau, Vietnam</p>
       </div>
+      <div class="details-divider" aria-hidden="true"></div>
       <div class="detail-card" data-reveal>
         <div class="detail-icon" data-i18n="details.attire.icon">Attire</div>
         <h3 data-i18n="details.attire.h3">Dress Code</h3>

@@ -1,4 +1,36 @@
 /* ════════════════════════════════════════════
+   CINEMATIC INTRO
+   ════════════════════════════════════════════ */
+(function () {
+  const overlay = document.getElementById('intro-overlay');
+  if (!overlay) return;
+
+  const tin  = document.getElementById('intro-tin');
+  const yen  = document.getElementById('intro-yen');
+  const amp  = overlay.querySelector('.intro-amp');
+  const place  = overlay.querySelector('.intro-place');
+  const date   = overlay.querySelector('.intro-date');
+  const lines  = overlay.querySelectorAll('.intro-line');
+
+  function show(el, delay) {
+    setTimeout(() => el && el.classList.add('show'), delay);
+  }
+
+  show(lines[0], 100);
+  show(lines[1], 120);
+  show(place, 200);
+  show(tin, 380);
+  show(amp, 480);
+  show(yen, 520);
+  show(date, 720);
+
+  setTimeout(() => {
+    overlay.classList.add('done');
+    setTimeout(() => { overlay.style.display = 'none'; }, 1200);
+  }, 2400);
+})();
+
+/* ════════════════════════════════════════════
    LANGUAGE TOGGLE (EN ↔ VI)
    ════════════════════════════════════════════ */
 (function () {
@@ -8,7 +40,7 @@
       'nav.details':            'Details',
       'nav.stay':               'Stay',
       'nav.contact':            'Contact',
-      'hero.eyebrow':           'An Invitation to Witness',
+      'hero.eyebrow':           'November 28, 2026 &nbsp;·&nbsp; Cà Mau',
       'hero.date':              'November 28, 2026  ·  Cà Mau, Vietnam',
       'hero.days':              'Days',
       'hero.hours':             'Hours',
@@ -69,7 +101,7 @@
       'nav.details':            'Chi Tiết',
       'nav.stay':               'Lưu Trú',
       'nav.contact':            'Liên Hệ',
-      'hero.eyebrow':           'Trân Trọng Kính Mời',
+      'hero.eyebrow':           '28 tháng 11, 2026 &nbsp;·&nbsp; Cà Mau',
       'hero.date':              '28 tháng 11, 2026  ·  Cà Mau, Việt Nam',
       'hero.days':              'Ngày',
       'hero.hours':             'Giờ',
@@ -176,21 +208,21 @@
 })();
 
 /* ════════════════════════════════════════════
-   HERO CANVAS — dark gold particle field
+   HERO CANVAS — touch + gyro + tap burst
    ════════════════════════════════════════════ */
 (function () {
   const canvas = document.getElementById('hero-canvas');
   const ctx    = canvas.getContext('2d');
-  let W, H, t  = 0;
-  let particles = [];
-  const mouse = { x: -999, y: -999 };
+  let W, H;
+  let particles = [], bursts = [];
+  const pointer = { x: -999, y: -999, active: false };
+  // Gyro offset for parallax tilt
+  const gyro = { x: 0, y: 0 };
 
-  const GOLD_PALETTE = [
-    'rgba(201,169,110,',
-    'rgba(232,200,122,',
-    'rgba(168,140,88,',
-    'rgba(245,220,150,',
-    'rgba(180,150,80,',
+  const GOLD = [
+    'rgba(255,220,140,', 'rgba(245,200,110,',
+    'rgba(232,200,122,', 'rgba(255,240,170,',
+    'rgba(210,170,90,',
   ];
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
@@ -202,49 +234,61 @@
 
   function mkParticle() {
     return {
-      x:      rnd(0, W),
-      y:      rnd(0, H),
-      vx:     rnd(-0.12, 0.12),
-      vy:     rnd(-0.18, -0.04),
-      size:   rnd(1, 3.5),
-      col:    GOLD_PALETTE[Math.floor(Math.random() * GOLD_PALETTE.length)],
-      alpha:  rnd(0.2, 0.7),
-      phase:  rnd(0, Math.PI * 2),
-      pSpeed: rnd(0.006, 0.02),
+      x: rnd(0, W), y: rnd(0, H),
+      vx: rnd(-0.15, 0.15), vy: rnd(-0.22, -0.05),
+      size: rnd(1, 4),
+      col: GOLD[Math.floor(Math.random() * GOLD.length)],
+      alpha: rnd(0.35, 0.9),
+      phase: rnd(0, Math.PI * 2),
+      pSpeed: rnd(0.007, 0.022),
     };
   }
 
-  function init() { particles = Array.from({ length: 160 }, mkParticle); }
+  /* Tap/touch burst — spawns 18 fast-fading gold sparks */
+  function spawnBurst(x, y) {
+    for (let i = 0; i < 22; i++) {
+      const angle = rnd(0, Math.PI * 2);
+      const speed = rnd(1.5, 6);
+      bursts.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - rnd(0, 2),
+        size: rnd(1.5, 4.5),
+        alpha: rnd(0.7, 1),
+        col: GOLD[Math.floor(Math.random() * GOLD.length)],
+        life: 1,
+        decay: rnd(0.025, 0.055),
+      });
+    }
+  }
+
+  function init() { particles = Array.from({ length: 180 }, mkParticle); }
 
   function drawParticle(p) {
-    const a = p.alpha * (0.4 + 0.6 * Math.abs(Math.sin(p.phase)));
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = p.col + a + ')';
-    ctx.fill();
-    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 4);
-    g.addColorStop(0, p.col + (a * 0.3) + ')');
-    g.addColorStop(1, p.col + '0)');
+    const a = p.alpha * (0.45 + 0.55 * Math.abs(Math.sin(p.phase)));
+    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 5);
+    g.addColorStop(0,   p.col + (a * 0.9) + ')');
+    g.addColorStop(0.3, p.col + (a * 0.4) + ')');
+    g.addColorStop(1,   p.col + '0)');
     ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size * 4, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = p.col + a + ')';
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
   }
 
   function drawConnections() {
-    const maxDist = 130;
+    const maxDist = 120;
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
         const d  = Math.sqrt(dx * dx + dy * dy);
         if (d < maxDist) {
-          const a = (1 - d / maxDist) * 0.08;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(201,169,110,${a})`;
-          ctx.lineWidth = 0.5;
+          ctx.strokeStyle = `rgba(245,210,130,${(1 - d / maxDist) * 0.1})`;
+          ctx.lineWidth = 0.6;
           ctx.stroke();
         }
       }
@@ -252,73 +296,139 @@
   }
 
   function draw() {
-    t += 0.012;
     ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = '#080808';
     ctx.fillRect(0, 0, W, H);
-    const bloom = ctx.createRadialGradient(W * 0.5, H * 0.45, 0, W * 0.5, H * 0.45, W * 0.55);
-    bloom.addColorStop(0,   'rgba(40,28,10,0.8)');
-    bloom.addColorStop(0.4, 'rgba(20,14,5,0.4)');
+
+    /* Warm bloom at center, shifts with gyro */
+    const bx = W * 0.5 + gyro.x * 30;
+    const by = H * 0.44 + gyro.y * 20;
+    const bloom = ctx.createRadialGradient(bx, by, 0, bx, by, W * 0.6);
+    bloom.addColorStop(0,   'rgba(50,34,8,0.85)');
+    bloom.addColorStop(0.35,'rgba(22,14,3,0.45)');
     bloom.addColorStop(1,   'rgba(8,8,8,0)');
     ctx.fillStyle = bloom;
     ctx.fillRect(0, 0, W, H);
 
+    const px = pointer.active ? pointer.x : -999;
+    const py = pointer.active ? pointer.y : -999;
+
     particles.forEach(p => {
       p.phase += p.pSpeed;
-      p.x += p.vx + Math.sin(p.phase * 0.7) * 0.15;
-      p.y += p.vy;
+      /* Gyro drift */
+      p.x += p.vx + Math.sin(p.phase * 0.7) * 0.18 + gyro.x * 0.4;
+      p.y += p.vy + gyro.y * 0.25;
       if (p.y < -10) { p.y = H + 10; p.x = rnd(0, W); }
       if (p.x < -10) p.x = W + 10;
       if (p.x > W + 10) p.x = -10;
-      const dx = mouse.x - p.x, dy = mouse.y - p.y;
+      /* Pointer attraction (mouse or touch) */
+      const dx = px - p.x, dy = py - p.y;
       const d  = Math.sqrt(dx * dx + dy * dy);
-      if (d < 160 && d > 1) {
-        p.x += (dx / d) * 1.2 * (1 - d / 160);
-        p.y += (dy / d) * 1.2 * (1 - d / 160);
+      if (d < 180 && d > 1) {
+        p.x += (dx / d) * 1.5 * (1 - d / 180);
+        p.y += (dy / d) * 1.5 * (1 - d / 180);
       }
     });
 
     drawConnections();
     particles.forEach(drawParticle);
 
-    if (mouse.x > 0 && mouse.x < W) {
-      const aura = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 80);
-      aura.addColorStop(0,   'rgba(201,169,110,0.06)');
-      aura.addColorStop(0.5, 'rgba(201,169,110,0.02)');
-      aura.addColorStop(1,   'rgba(201,169,110,0)');
+    /* Pointer aura */
+    if (pointer.active) {
+      const aura = ctx.createRadialGradient(px, py, 0, px, py, 100);
+      aura.addColorStop(0,   'rgba(245,210,130,0.09)');
+      aura.addColorStop(0.5, 'rgba(245,210,130,0.03)');
+      aura.addColorStop(1,   'rgba(245,210,130,0)');
       ctx.fillStyle = aura;
-      ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 80, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, 100, 0, Math.PI * 2); ctx.fill();
     }
+
+    /* Burst particles */
+    bursts = bursts.filter(b => b.life > 0);
+    bursts.forEach(b => {
+      b.x += b.vx; b.y += b.vy; b.vy += 0.08;
+      b.vx *= 0.97; b.life -= b.decay;
+      const a = b.alpha * b.life;
+      const g2 = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.size * 4);
+      g2.addColorStop(0, b.col + a + ')');
+      g2.addColorStop(1, b.col + '0)');
+      ctx.fillStyle = g2;
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.size * 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = b.col + Math.min(1, a * 1.5) + ')';
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.size, 0, Math.PI * 2); ctx.fill();
+    });
 
     ctx.globalAlpha = 1;
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  /* Mouse */
+  window.addEventListener('mousemove', e => {
+    pointer.x = e.clientX; pointer.y = e.clientY; pointer.active = true;
+  });
+
+  /* Touch — move tracks finger, start fires burst */
+  canvas.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    pointer.x = t.clientX; pointer.y = t.clientY; pointer.active = true;
+    spawnBurst(t.clientX, t.clientY);
+  }, { passive: true });
+  canvas.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    pointer.x = t.clientX; pointer.y = t.clientY;
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => { pointer.active = false; }, { passive: true });
+
+  /* Whole-page tap burst (outside canvas too) */
+  document.addEventListener('touchstart', e => {
+    if (e.target === canvas) return;
+    const t = e.touches[0];
+    spawnBurst(t.clientX, t.clientY);
+  }, { passive: true });
+
+  /* Gyroscope parallax */
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', e => {
+      if (e.gamma == null) return;
+      gyro.x = Math.max(-1, Math.min(1, e.gamma / 25));
+      gyro.y = Math.max(-1, Math.min(1, (e.beta  - 45) / 30));
+    }, { passive: true });
+  }
+
   resize(); init(); draw();
   window.addEventListener('resize', () => { resize(); init(); });
 })();
 
 /* ════════════════════════════════════════════
-   COUNTDOWN
+   COUNTDOWN — flip animation on digit change
    ════════════════════════════════════════════ */
 (function () {
   const target = new Date('2026-11-28T08:00:00+07:00');
+  const prev = { days: '', hours: '', mins: '', secs: '' };
+
+  function flipTo(el, val) {
+    if (!el || el.textContent === val) return;
+    el.classList.remove('flip');
+    void el.offsetWidth; // reflow to restart animation
+    el.textContent = val;
+    el.classList.add('flip');
+  }
+
   function update() {
     const diff = target - new Date();
     if (diff <= 0) {
       document.getElementById('countdown').innerHTML =
-        '<p style="font-family:var(--ff-serif);font-size:1.5rem;color:var(--champagne);letter-spacing:.15em">Today is the day</p>';
+        '<p style="font-family:var(--ff-display);font-size:1.6rem;color:var(--champagne);letter-spacing:.12em;font-style:italic">Today is the day</p>';
       return;
     }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000)  / 60000);
-    const s = Math.floor((diff % 60000)    / 1000);
-    document.getElementById('cd-days').textContent  = String(d).padStart(3,'0');
-    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
-    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+    const d = String(Math.floor(diff / 86400000)).padStart(3, '0');
+    const h = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    const m = String(Math.floor((diff % 3600000)  / 60000)).padStart(2, '0');
+    const s = String(Math.floor((diff % 60000)    / 1000)).padStart(2, '0');
+    flipTo(document.getElementById('cd-days'),  d);
+    flipTo(document.getElementById('cd-hours'), h);
+    flipTo(document.getElementById('cd-mins'),  m);
+    flipTo(document.getElementById('cd-secs'),  s);
   }
   update();
   setInterval(update, 1000);
@@ -640,7 +750,7 @@
   let W, H, shapes = [];
 
   function resize() {
-    const section = canvas.closest('.rsvp-section');
+    const section = canvas.closest('.contact-section');
     W = canvas.width  = section ? section.offsetWidth  : window.innerWidth;
     H = canvas.height = section ? section.offsetHeight : window.innerHeight;
   }
@@ -709,5 +819,115 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const y = window.scrollY;
     heroContent.style.transform = `translateY(${y * 0.3}px)`;
     heroContent.style.opacity   = `${1 - y / window.innerHeight * 1.4}`;
+  }, { passive: true });
+})();
+
+/* ════════════════════════════════════════════
+   HERO GYRO TILT — text layers shift with phone tilt
+   ════════════════════════════════════════════ */
+(function () {
+  if (!window.DeviceOrientationEvent) return;
+  const names    = document.querySelector('.hero-names');
+  const eyebrow  = document.querySelector('.hero-eyebrow');
+  const dateWrap = document.querySelector('.hero-date-wrap');
+  const cd       = document.querySelector('.countdown');
+
+  let targetX = 0, targetY = 0, curX = 0, curY = 0;
+
+  window.addEventListener('deviceorientation', e => {
+    if (e.gamma == null) return;
+    targetX = Math.max(-12, Math.min(12, e.gamma / 4));
+    targetY = Math.max(-8,  Math.min(8,  (e.beta - 45) / 6));
+  }, { passive: true });
+
+  function tick() {
+    curX += (targetX - curX) * 0.08;
+    curY += (targetY - curY) * 0.08;
+    if (names)    names.style.transform    = `translate(${curX * 1.4}px, ${curY * 1.0}px)`;
+    if (eyebrow)  eyebrow.style.transform  = `translate(${curX * 0.6}px, ${curY * 0.4}px)`;
+    if (dateWrap) dateWrap.style.transform = `translate(${curX * 0.8}px, ${curY * 0.5}px)`;
+    if (cd)       cd.style.transform       = `translate(${curX * 0.5}px, ${curY * 0.3}px)`;
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ════════════════════════════════════════════
+   MOBILE STORY SWIPER — horizontal swipe on mobile
+   ════════════════════════════════════════════ */
+(function () {
+  if (window.innerWidth > 900) return;
+
+  const steps   = Array.from(document.querySelectorAll('.scrolly-step'));
+  if (!steps.length) return;
+
+  let current   = 0;
+  let touchStartX = 0, touchStartY = 0;
+  let dragging  = false;
+
+  /* Dots indicator */
+  const dotsWrap = document.createElement('div');
+  dotsWrap.className = 'story-dots';
+  const dotsArr = steps.map((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'story-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Chapter ' + (i + 1));
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+    return d;
+  });
+
+  const section = document.getElementById('story');
+  if (section) section.appendChild(dotsWrap);
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= steps.length) return;
+    steps[current].classList.remove('is-active', 'swipe-out-left', 'swipe-out-right', 'swipe-in-left', 'swipe-in-right');
+    const dir = idx > current ? 1 : -1;
+    steps[current].classList.add(dir > 0 ? 'swipe-out-left' : 'swipe-out-right');
+    current = idx;
+    steps[current].classList.remove('swipe-out-left', 'swipe-out-right');
+    steps[current].classList.add(dir > 0 ? 'swipe-in-right' : 'swipe-in-left', 'is-active');
+    dotsArr.forEach((d, i) => d.classList.toggle('active', i === current));
+    setTimeout(() => {
+      steps.forEach(s => s.classList.remove('swipe-in-left', 'swipe-in-right', 'swipe-out-left', 'swipe-out-right'));
+    }, 600);
+  }
+
+  /* Activate first */
+  steps.forEach((s, i) => { if (i !== 0) s.style.display = 'none'; });
+  steps[0].classList.add('is-active');
+
+  function show(idx) {
+    steps.forEach((s, i) => { s.style.display = i === idx ? 'flex' : 'none'; });
+    steps[idx].classList.add('is-active');
+    dotsArr.forEach((d, i) => d.classList.toggle('active', i === idx));
+    current = idx;
+  }
+
+  const storySection = document.getElementById('story');
+  if (!storySection) return;
+
+  storySection.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    dragging = true;
+  }, { passive: true });
+
+  storySection.addEventListener('touchend', e => {
+    if (!dragging) return;
+    dragging = false;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < Math.abs(dy) * 0.8 || Math.abs(dx) < 40) return;
+    if (dx < 0 && current < steps.length - 1) show(current + 1);
+    else if (dx > 0 && current > 0)           show(current - 1);
+  }, { passive: true });
+
+  /* Rebuild on resize */
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      steps.forEach(s => { s.style.display = ''; });
+    }
   }, { passive: true });
 })();
